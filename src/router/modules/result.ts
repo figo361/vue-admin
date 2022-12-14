@@ -15,7 +15,8 @@ export default {
       name: "Success",
       component: () => import("@/views/result/success.vue"),
       meta: {
-        title: $t("menus.hsSuccess")
+        title: $t("menus.hsSuccess"),
+        showLink: false
       }
     },
     {
@@ -23,7 +24,8 @@ export default {
       name: "Fail",
       component: () => import("@/views/result/fail.vue"),
       meta: {
-        title: $t("menus.hsFail")
+        title: $t("menus.hsFail"),
+        showLink: false
       }
     }
   ]
