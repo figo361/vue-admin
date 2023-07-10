@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import dayjs from "dayjs";
-import axios from "axios";
 import MdEditor from "md-editor-v3";
 import Bar from "./components/Bar.vue";
 import Pie from "./components/Pie.vue";
 import Line from "./components/Line.vue";
+import { getReleases } from "@/api/list";
 import TypeIt from "@/components/ReTypeit";
+import { useWindowSize } from "@vueuse/core";
 import { ref, computed, markRaw } from "vue";
 import Github from "./components/Github.vue";
 import { randomColor } from "@pureadmin/utils";
@@ -17,29 +18,30 @@ defineOptions({
 
 const list = ref();
 const loading = ref<boolean>(true);
+const { version } = __APP_INFO__.pkg;
 const titleClass = computed(() => {
   return ["text-base", "font-medium"];
 });
+
+const { height } = useWindowSize();
 
 setTimeout(() => {
   loading.value = !loading.value;
 }, 800);
 
-axios
-  .get("https://api.github.com/repos/pure-admin/vue-pure-admin/releases")
-  .then(res => {
-    list.value = res.data.map(v => {
-      return {
-        content: v.body,
-        timestamp: dayjs(v.published_at).format("YYYY/MM/DD hh:mm:ss A"),
-        icon: markRaw(
-          useRenderFlicker({
-            background: randomColor({ type: "hex" }) as string
-          })
-        )
-      };
-    });
+getReleases().then(({ data }) => {
+  list.value = data.list.map(v => {
+    return {
+      content: v.body,
+      timestamp: dayjs(v.published_at).format("YYYY/MM/DD hh:mm:ss A"),
+      icon: markRaw(
+        useRenderFlicker({
+          background: randomColor({ type: "hex" }) as string
+        })
+      )
+    };
   });
+});
 </script>
 
 <template>
@@ -65,7 +67,10 @@ axios
           }
         }"
       >
-        <el-card shadow="never" style="height: 347px">
+        <el-card
+          shadow="never"
+          :style="{ height: `calc(${height}px - 35vh - 250px)` }"
+        >
           <template #header>
             <a
               :class="titleClass"
@@ -74,15 +79,15 @@ axios
             >
               <TypeIt
                 :className="'type-it2'"
-                :values="['PureAdmin 版本日志']"
+                :values="[`PureAdmin 版本日志（当前版本 v${version}）`]"
                 :cursor="false"
-                :speed="80"
+                :speed="60"
               />
             </a>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
-              <el-scrollbar height="324px">
+              <el-scrollbar :height="`calc(${height}px - 35vh - 340px)`">
                 <el-timeline v-show="list?.length > 0">
                   <el-timeline-item
                     v-for="(item, index) in list"
@@ -120,7 +125,10 @@ axios
           }
         }"
       >
-        <el-card shadow="never" style="height: 347px">
+        <el-card
+          shadow="never"
+          :style="{ height: `calc(${height}px - 35vh - 250px)` }"
+        >
           <template #header>
             <a
               :class="titleClass"
@@ -137,7 +145,9 @@ axios
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
-              <Github />
+              <el-scrollbar :height="`calc(${height}px - 35vh - 340px)`">
+                <Github />
+              </el-scrollbar>
             </template>
           </el-skeleton>
         </el-card>
@@ -281,6 +291,6 @@ axios
 }
 
 .main-content {
-  margin: 20px 20px 0 20px !important;
+  margin: 20px 20px 0 !important;
 }
 </style>

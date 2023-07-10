@@ -8,7 +8,7 @@ import Player from "xgplayer";
 import "xgplayer/dist/index.min.css";
 
 defineOptions({
-  name: "Video"
+  name: "VideoPage"
 });
 
 onMounted(() => {
@@ -42,7 +42,7 @@ onMounted(() => {
             href="https://v3.h5player.bytedance.com/"
             target="_blank"
             :icon="useRenderIcon(VideoPlay)"
-            style="font-size: 16px; margin: 0 4px 5px"
+            style="margin: 0 4px 5px; font-size: 16px"
           >
             西瓜播放器
           </el-link>
