@@ -68,6 +68,8 @@ menus:
   hsguide: 引导页
   hsAble: 功能
   hsMenuTree: 菜单树结构
+  hsVideoFrame: 视频帧截取-wasm版
+  hsWavesurfer: 音频可视化
   hsOptimize: 防抖、截流、复制、长按指令
   hsWatermark: 水印
   hsPrint: 打印
@@ -98,7 +100,7 @@ menus:
   hsSwiper: Swiper插件
   hsVirtualList: 虚拟列表
   hsPdf: PDF预览
-  hsExecl: 导出Excel
+  hsExcel: 导出Excel
   hsInfiniteScroll: 表格无限滚动
   hsSensitive: 敏感词过滤
   hsPinyin: 汉语拼音
@@ -114,7 +116,8 @@ login:
   username: 账号
   password: 密码
   verifyCode: 验证码
-  remember: 记住密码
+  remember: 天内免登录
+  rememberInfo: 勾选并登录后，规定天数内无需输入用户名和密码会自动登入系统
   sure: 确认密码
   forget: 忘记密码?
   login: 登录
