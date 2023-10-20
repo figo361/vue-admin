@@ -1,7 +1,7 @@
 import { http } from "@/utils/http";
-
+import { baseUrlApi } from "./utils";
 export type UserResult = {
-  success: boolean;
+  code: number;
   data: {
     /** 用户名 */
     username: string;
@@ -10,9 +10,9 @@ export type UserResult = {
     /** `token` */
     accessToken: string;
     /** 用于调用刷新`accessToken`的接口时所需的`token` */
-    refreshToken: string;
+    // refreshToken: string;
     /** `accessToken`的过期时间（格式'xxxx/xx/xx xx:xx:xx'） */
-    expires: Date;
+    // expires: Date;
   };
 };
 
@@ -30,7 +30,7 @@ export type RefreshTokenResult = {
 
 /** 登录 */
 export const getLogin = (data?: object) => {
-  return http.request<UserResult>("post", "/login", { data });
+  return http.request<UserResult>("post", baseUrlApi("spd_login"), { data });
 };
 
 /** 刷新token */
